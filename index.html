@@ -1,442 +1,1048 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sai Aarush — portfolio</title>
-  <meta name="description" content="sai aarush — studying, into ham radio, software, code, and random builds." />
-
-  <!-- initial theme, Chirpy-style: prefer stored value, else system -->
-  <script>
-    (function () {
-      try {
-        const stored = localStorage.getItem('theme');
-        const systemPrefersDark = window.matchMedia &&
-          window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-        if (stored === 'dark' || (!stored && systemPrefersDark)) {
-          document.documentElement.classList.add('dark');
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sai Aarush - Student & Builder</title>
+    <meta name="description" content="sai aarush — studying, into ham radio, software, code, and random builds.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --background: #09090b;
+            --foreground: #fafafa;
+            --card: #18181b;
+            --card-foreground: #fafafa;
+            --muted: #27272a;
+            --muted-foreground: #a1a1aa;
+            --border: #27272a;
+            --primary: #fafafa;
+            --secondary: #27272a;
+            --accent: #3f3f46;
+            --radius: 0.75rem;
         }
-      } catch (e) {
-        // if anything breaks, just stay in light mode
-      }
-    })();
-  </script>
 
-  <style>
-    :root {
-      --bg: #ffffff;
-      --fg: #0b0b0c;
-      --muted: #6b7280;
-      --card: #f8fafc;
-      --border: #e5e7eb;
-      --link: #0b57d0;
-      --shadow: 0 1px 2px rgba(0,0,0,.06), 0 4px 12px rgba(0,0,0,.04);
-      --radius: 16px;
-      --maxw: 980px;
-      --bullet: #111827;
-      --input-bg: #ffffff;
-      --button-bg: #ffffff;
-      --tag-bg: #ffffff;
-      --tag-fg: #111827;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    /* dark theme inspired by Chirpy */
-    html.dark {
-      --bg: #020617;
-      --fg: #e5e7eb;
-      --muted: #9ca3af;
-      --card: #020617;
-      --border: #1f2937;
-      --link: #60a5fa;
-      --shadow: 0 1px 2px rgba(15,23,42,.7), 0 10px 35px rgba(0,0,0,.9);
-      --bullet: #9ca3af;
-      --input-bg: #020617;
-      --button-bg: #020617;
-      --tag-bg: #020617;
-      --tag-fg: #e5e7eb;
-    }
+        html {
+            scroll-behavior: smooth;
+        }
 
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
-    body {
-      margin: 0;
-      font: 15px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      color: var(--fg);
-      background: var(--bg);
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-      transition: background .25s ease, color .25s ease;
-    }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--background);
+            color: var(--foreground);
+            line-height: 1.6;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
 
-    a { color: var(--link); text-decoration: none; }
-    a:hover { text-decoration: underline; }
+        /* Animated background gradient */
+        .gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top, rgba(63, 63, 70, 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom right, rgba(39, 39, 42, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
 
-    .wrap { max-width: var(--maxw); margin: 0 auto; padding: 28px 20px 80px; }
+        /* Container */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
 
-    header {
-      position: sticky;
-      top: 0;
-      backdrop-filter: blur(6px);
-      background: color-mix(in oklab, var(--bg), transparent 8%);
-      border-bottom: 1px solid var(--border);
-      z-index: 50;
-    }
+        /* Header/Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            background: rgba(9, 9, 11, 0.8);
+            border-bottom: 1px solid var(--border);
+        }
 
-    .nav {
-      max-width: var(--maxw);
-      margin: 0 auto;
-      padding: 14px 20px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
+        nav {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    .brand { font-weight: 700; letter-spacing: .3px; }
-    .spacer { flex: 1; }
+        .logo {
+            font-weight: 600;
+            font-size: 1.125rem;
+            color: var(--foreground);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
 
-    .nav a { color: inherit; opacity: .8; }
-    .nav a:hover { opacity: 1; }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
 
-    .theme-toggle {
-      padding: 6px 10px;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      background: var(--card);
-      cursor: pointer;
-      font-size: 13px;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      line-height: 1;
-      transition: background .25s ease, border-color .25s ease, color .25s ease, transform .1s ease;
-    }
+        .nav-links a {
+            color: var(--muted-foreground);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
 
-    .theme-toggle span {
-      font-size: 14px;
-    }
+        .nav-links a:hover {
+            color: var(--foreground);
+        }
 
-    .theme-toggle:active {
-      transform: scale(0.96);
-    }
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--muted-foreground);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: var(--radius);
+            transition: background 0.2s ease, color 0.2s ease;
+        }
 
-    .hero {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-      padding-top: 28px;
-      padding-bottom: 8px;
-    }
+        .theme-toggle:hover {
+            background: var(--muted);
+            color: var(--foreground);
+        }
 
-    .hero h1 {
-      font-size: clamp(28px, 4vw, 44px);
-      line-height: 1.15;
-      margin: 0 0 6px;
-      font-weight: 800;
-      letter-spacing: -.02em;
-    }
+        /* Hero Section */
+        .hero {
+            padding: 8rem 0 4rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
 
-    .hero p {
-      margin: 0;
-      color: var(--muted);
-    }
+        .hero-content {
+            animation: fadeInUp 0.8s ease-out;
+        }
 
-    section { padding: 28px 0; }
-    h2 { font-size: 20px; margin: 0 0 14px; }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px;
-      box-shadow: var(--shadow);
-      transition: background .25s ease, border-color .25s ease, box-shadow .25s ease;
-    }
+        .hero h1 {
+            font-size: clamp(3rem, 10vw, 5rem);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 16px;
-    }
+        .hero h1 span {
+            display: block;
+        }
 
-    .col-12 { grid-column: span 12; }
-    .col-6 { grid-column: span 12; }
-    .col-4 { grid-column: span 12; }
+        .hero h1 .name-secondary {
+            color: var(--muted-foreground);
+        }
 
-    @media (min-width: 720px) {
-      .col-6 { grid-column: span 6; }
-      .col-4 { grid-column: span 4; }
-    }
+        .hero-description {
+            font-size: 1.125rem;
+            color: var(--muted-foreground);
+            max-width: 520px;
+            margin-top: 1.5rem;
+            line-height: 1.7;
+        }
 
-    .project { display: flex; flex-direction: column; gap: 10px; }
+        .hero-socials {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
 
-    .tag {
-      display: inline-block;
-      padding: 4px 8px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: var(--tag-bg);
-      color: var(--tag-fg);
-      font-size: 12px;
-    }
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius);
+            background: var(--muted);
+            color: var(--muted-foreground);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
 
-    .muted { color: var(--muted); }
+        .social-link:hover {
+            background: var(--accent);
+            color: var(--foreground);
+            transform: translateY(-2px);
+        }
 
-    .list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: grid;
-      gap: 10px;
-    }
+        .social-link svg {
+            width: 18px;
+            height: 18px;
+        }
 
-    .list li {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+        /* Section Styles */
+        section {
+            padding: 4rem 0;
+        }
 
-    .bullet {
-      width: 8px;
-      height: 8px;
-      background: var(--bullet);
-      border-radius: 999px;
-      opacity: .18;
-    }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
 
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 28px 20px;
-      color: var(--muted);
-    }
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
 
-    html { scroll-behavior: smooth; }
+        .section-link {
+            color: var(--muted-foreground);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.2s ease;
+        }
 
-    .mono {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    }
+        .section-link:hover {
+            color: var(--foreground);
+        }
 
-    input.mono,
-    button.copy-btn {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      background: var(--input-bg);
-      color: var(--fg);
-      transition: background .25s ease, border-color .25s ease, color .25s ease;
-    }
+        /* Project Cards */
+        .projects-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
 
-    button.copy-btn {
-      width: auto;
-      cursor: pointer;
-      background: var(--button-bg);
-    }
-  </style>
+        .project-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.5);
+            text-decoration: none;
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            padding: 0.25rem 0.75rem;
+            background: var(--muted);
+            border-radius: 9999px;
+            color: var(--muted-foreground);
+            font-weight: 500;
+        }
+
+        .project-card-content {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .project-image {
+            width: 140px;
+            height: 100px;
+            border-radius: calc(var(--radius) - 4px);
+            overflow: hidden;
+            flex-shrink: 0;
+            background: var(--muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .project-image svg {
+            width: 40px;
+            height: 40px;
+            color: var(--muted-foreground);
+        }
+
+        .project-info h3 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.01em;
+        }
+
+        .project-info p {
+            color: var(--muted-foreground);
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        /* Radio Log Section */
+        .radio-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+        }
+
+        .radio-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .radio-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            color: var(--muted-foreground);
+            font-size: 0.9375rem;
+        }
+
+        .radio-bullet {
+            width: 8px;
+            height: 8px;
+            background: var(--muted-foreground);
+            border-radius: 50%;
+            margin-top: 0.5rem;
+            flex-shrink: 0;
+            opacity: 0.5;
+        }
+
+        /* Now Section */
+        .now-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+        }
+
+        .now-card p {
+            color: var(--muted-foreground);
+            margin-bottom: 1rem;
+        }
+
+        .now-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .now-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            color: var(--muted-foreground);
+            font-size: 0.9375rem;
+        }
+
+        /* Connect Section */
+        .connect-section {
+            padding: 4rem 0 6rem;
+        }
+
+        .connect-content {
+            background: linear-gradient(135deg, var(--card) 0%, rgba(39, 39, 42, 0.5) 100%);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 3rem;
+            text-align: center;
+        }
+
+        .connect-content h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .connect-content p {
+            color: var(--muted-foreground);
+            margin-bottom: 2rem;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .connect-links {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .connect-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            border-radius: var(--radius);
+            font-weight: 500;
+            font-size: 0.875rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .connect-btn.primary {
+            background: var(--foreground);
+            color: var(--background);
+        }
+
+        .connect-btn.primary:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .connect-btn.secondary {
+            background: var(--muted);
+            color: var(--foreground);
+            border: 1px solid var(--border);
+        }
+
+        .connect-btn.secondary:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .connect-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Crypto Section */
+        .crypto-section {
+            margin-top: 1.5rem;
+        }
+
+        .crypto-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+        }
+
+        .crypto-card h3 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .crypto-card > p {
+            color: var(--muted-foreground);
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .crypto-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        @media (min-width: 640px) {
+            .crypto-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .crypto-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .crypto-item.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .crypto-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--muted-foreground);
+            text-transform: uppercase;
+        }
+
+        .crypto-input-group {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .crypto-input {
+            flex: 1;
+            padding: 0.625rem 0.75rem;
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: calc(var(--radius) - 4px);
+            color: var(--foreground);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+        }
+
+        .crypto-copy-btn {
+            padding: 0.625rem 1rem;
+            background: var(--muted);
+            border: 1px solid var(--border);
+            border-radius: calc(var(--radius) - 4px);
+            color: var(--foreground);
+            font-size: 0.8125rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .crypto-copy-btn:hover {
+            background: var(--accent);
+        }
+
+        .crypto-note {
+            font-size: 0.75rem;
+            color: var(--muted-foreground);
+            margin-top: 0.25rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .crypto-note a {
+            color: var(--muted-foreground);
+            text-decoration: underline;
+        }
+
+        .crypto-note a:hover {
+            color: var(--foreground);
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--muted-foreground);
+            font-size: 0.8125rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-links a {
+            color: var(--muted-foreground);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--foreground);
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .fade-in:nth-child(1) { animation-delay: 0.1s; }
+        .fade-in:nth-child(2) { animation-delay: 0.2s; }
+        .fade-in:nth-child(3) { animation-delay: 0.3s; }
+        .fade-in:nth-child(4) { animation-delay: 0.4s; }
+
+        /* Mobile Responsive */
+        @media (max-width: 640px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .project-card-content {
+                flex-direction: column;
+            }
+
+            .project-image {
+                width: 100%;
+                height: 160px;
+            }
+
+            .connect-content {
+                padding: 2rem 1.5rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .hero-socials {
+                gap: 0.5rem;
+            }
+
+            .connect-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .connect-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Mobile menu button */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--foreground);
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        @media (max-width: 640px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <nav class="nav">
-      <div class="brand">sai aarush</div>
-      <div class="spacer"></div>
+    <div class="gradient-bg"></div>
 
-      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark mode">
-        <span id="theme-icon">🌙</span>
-        <span id="theme-label">dark</span>
-      </button>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="#" class="logo">sai aarush</a>
+            <ul class="nav-links">
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#radio">Radio</a></li>
+                <li><a href="#now">Now</a></li>
+                <li><a href="#connect">Connect</a></li>
+            </ul>
+            <button class="theme-toggle" aria-label="Toggle theme">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+        </nav>
+    </header>
 
-      <a href="#about">about</a>
-      <a href="#projects">projects</a>
-      <a href="#radio">radio</a>
-      <a href="#now">now</a>
-      <a href="#contact">contact</a>
-    </nav>
-  </header>
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>
+                        <span>Sai</span>
+                        <span class="name-secondary">Aarush</span>
+                    </h1>
+                    <p class="hero-description">
+                        14, studying, and building small things. I like ham radio, software, and random experiments. Hope your days goes well!
+                    </p>
+                    <div class="hero-socials">
+                        <!-- GitHub -->
+                        <a href="https://github.com/SaiPwn" class="social-link" aria-label="GitHub" target="_blank" rel="noopener">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                        </a>
+                        <!-- X/Twitter -->
+                        <a href="https://x.com/SaiPwns" class="social-link" aria-label="X/Twitter" target="_blank" rel="noopener">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <!-- YouTube -->
+                        <a href="https://www.youtube.com/@SaiPwn" class="social-link" aria-label="YouTube" target="_blank" rel="noopener">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                            </svg>
+                        </a>
+                        <!-- Instagram -->
+                        <a href="https://www.instagram.com/saiaarushsharmaannapantula/" class="social-link" aria-label="Instagram" target="_blank" rel="noopener">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                        </a>
+                        <!-- Facebook -->
+                        <a href="https://www.facebook.com/saiaarushsharmaannapantula/" class="social-link" aria-label="Facebook" target="_blank" rel="noopener">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                        <!-- Ko-fi -->
+                        <a href="https://ko-fi.com/saipwn" class="social-link" aria-label="Ko-fi" target="_blank" rel="noopener">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.062 3.511c-1.246 1.453-4.011 3.976-4.011 3.976s-.121.119-.31.023c-.076-.057-.108-.09-.108-.09-.443-.441-3.368-3.049-4.034-3.954-.709-.965-1.041-2.7-.091-3.71.951-1.01 3.005-1.086 4.363.407 0 0 1.565-1.782 3.468-.963 1.904.82 1.832 3.011.723 4.311zm6.173.478c-.928.116-1.682.028-1.682.028V7.284h1.77s1.971.551 1.971 2.638c0 1.913-.985 2.667-2.059 3.015z"/>
+                            </svg>
+                        </a>
+                        <!-- Email -->
+                        <a href="mailto:sai.aarush@icloud.com" class="social-link" aria-label="Email">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect width="20" height="16" x="2" y="4" rx="2"/>
+                                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  <main class="wrap">
-    <section class="hero" id="about">
-      <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
-        <img src="https://pbs.twimg.com/media/FNjRmg0VUAM-Q_x?format=jpg&name=large" alt="photo of Sai Aarush" style="width:140px;height:140px;border-radius:50%;object-fit:cover;border:2px solid var(--border);box-shadow:var(--shadow)"/>
-        <div>
-          <h1>hi, i'm sai (saiPwn) — 14, studying, and building small things.</h1>
-          <p>i like ham radio, software, and random experiments. this site keeps it simple and honest.</p>
+        <!-- Projects Section -->
+        <section id="projects">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Projects</h2>
+                </div>
+                <div class="projects-grid">
+                    <!-- HAM-TTS Project -->
+                    <a href="https://github.com/SaiPwn/HAM-TTS" target="_blank" rel="noopener" class="project-card fade-in">
+                        <div class="project-tags">
+                            <span class="project-tag">Python</span>
+                        </div>
+                        <div class="project-card-content">
+                            <div class="project-image">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="m12 8-9.04 9.06a2.82 2.82 0 1 0 3.98 3.98L16 12"/>
+                                    <circle cx="17" cy="7" r="5"/>
+                                </svg>
+                            </div>
+                            <div class="project-info">
+                                <h3>HAM-TTS</h3>
+                                <p>Tiny tool for phonetics + morse practice. Focused on clarity and timing.</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- UwU-Linux Project -->
+                    <div class="project-card fade-in">
+                        <div class="project-tags">
+                            <span class="project-tag">Linux</span>
+                            <span class="project-tag">WIP</span>
+                        </div>
+                        <div class="project-card-content">
+                            <div class="project-image">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="4" y="4" width="16" height="16" rx="2"/>
+                                    <rect x="9" y="9" width="6" height="6"/>
+                                    <path d="M15 2v2"/>
+                                    <path d="M15 20v2"/>
+                                    <path d="M2 15h2"/>
+                                    <path d="M2 9h2"/>
+                                    <path d="M20 15h2"/>
+                                    <path d="M20 9h2"/>
+                                    <path d="M9 2v2"/>
+                                    <path d="M9 20v2"/>
+                                </svg>
+                            </div>
+                            <div class="project-info">
+                                <h3>UwU-Linux (WIP)</h3>
+                                <p>A playful, minimal linux setup I'm experimenting with. Link coming later.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Small Scripts Project -->
+                    <a href="https://github.com/SaiPwn" target="_blank" rel="noopener" class="project-card fade-in">
+                        <div class="project-tags">
+                            <span class="project-tag">Notes</span>
+                        </div>
+                        <div class="project-card-content">
+                            <div class="project-image">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                                    <polyline points="14 2 14 8 20 8"/>
+                                    <line x1="16" y1="13" x2="8" y2="13"/>
+                                    <line x1="16" y1="17" x2="8" y2="17"/>
+                                    <line x1="10" y1="9" x2="8" y2="9"/>
+                                </svg>
+                            </div>
+                            <div class="project-info">
+                                <h3>Small Scripts & Notes</h3>
+                                <p>Little utilities and scratchpads I use while learning.</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Radio Practice Project -->
+                    <div class="project-card fade-in">
+                        <div class="project-tags">
+                            <span class="project-tag">Radio</span>
+                        </div>
+                        <div class="project-card-content">
+                            <div class="project-image">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"/>
+                                    <path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"/>
+                                    <circle cx="12" cy="12" r="2"/>
+                                    <path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"/>
+                                    <path d="M19.1 4.9C23 8.8 23 15.1 19.1 19"/>
+                                </svg>
+                            </div>
+                            <div class="project-info">
+                                <h3>Radio Practice</h3>
+                                <p>Listening, logging, and antenna experiments. Just learning by doing.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Radio Log Section -->
+        <section id="radio">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Radio Log</h2>
+                </div>
+                <div class="radio-card">
+                    <ul class="radio-list">
+                        <li>
+                            <span class="radio-bullet"></span>
+                            <span>Building small antennas, learning propagation, and listening a lot. Staying within local rules while I learn.</span>
+                        </li>
+                        <li>
+                            <span class="radio-bullet"></span>
+                            <span>Favourite bands to listen on lately: HF for distance, UHF for local chatter.</span>
+                        </li>
+                        <li>
+                            <span class="radio-bullet"></span>
+                            <span>Tooling: SDR dongles, tiny handhelds, homebrew antennas, lots of experiments.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Now Section -->
+        <section id="now">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Now</h2>
+                </div>
+                <div class="now-card">
+                    <p>What I'm up to right now:</p>
+                    <ul class="now-list">
+                        <li>
+                            <span class="radio-bullet"></span>
+                            <span>Studying, building small projects, and writing things down so future-me remembers.</span>
+                        </li>
+                        <li>
+                            <span class="radio-bullet"></span>
+                            <span>Cleaning up code, testing audio timing for morse/phonetics, and trying new antenna ideas.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Connect Section -->
+        <section id="connect" class="connect-section">
+            <div class="container">
+                <div class="connect-content">
+                    <h2>Let's Connect</h2>
+                    <p>Always excited to chat about radio, Linux experiments, or cool projects.</p>
+                    <div class="connect-links">
+                        <a href="mailto:sai.aarush@icloud.com" class="connect-btn primary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect width="20" height="16" x="2" y="4" rx="2"/>
+                                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                            </svg>
+                            Email Me
+                        </a>
+                        <a href="https://github.com/SaiPwn" class="connect-btn secondary" target="_blank" rel="noopener">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                            GitHub
+                        </a>
+                        <a href="https://x.com/SaiPwns" class="connect-btn secondary" target="_blank" rel="noopener">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                            X / Twitter
+                        </a>
+                        <a href="https://ko-fi.com/saipwn" class="connect-btn secondary" target="_blank" rel="noopener">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.062 3.511c-1.246 1.453-4.011 3.976-4.011 3.976s-.121.119-.31.023c-.076-.057-.108-.09-.108-.09-.443-.441-3.368-3.049-4.034-3.954-.709-.965-1.041-2.7-.091-3.71.951-1.01 3.005-1.086 4.363.407 0 0 1.565-1.782 3.468-.963 1.904.82 1.832 3.011.723 4.311zm6.173.478c-.928.116-1.682.028-1.682.028V7.284h1.77s1.971.551 1.971 2.638c0 1.913-.985 2.667-2.059 3.015z"/>
+                            </svg>
+                            Ko-fi
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Crypto Tips Section -->
+                <div class="crypto-section">
+                    <div class="crypto-card">
+                        <h3>Crypto Tips</h3>
+                        <p>Copy any address below:</p>
+                        <div class="crypto-grid">
+                            <div class="crypto-item">
+                                <span class="crypto-label">BTC</span>
+                                <div class="crypto-input-group">
+                                    <input type="text" class="crypto-input" id="addr-btc" value="1GQ5EHDatGvortbHub3p5phXkvTqfYxBbL" readonly>
+                                    <button class="crypto-copy-btn" data-copy="#addr-btc">copy</button>
+                                </div>
+                                <span class="crypto-note">bitcoin:1GQ5EHDatGvortbHub3p5phXkvTqfYxBbL</span>
+                            </div>
+                            <div class="crypto-item">
+                                <span class="crypto-label">ETH</span>
+                                <div class="crypto-input-group">
+                                    <input type="text" class="crypto-input" id="addr-eth" value="0x9434edaaddf3b88b1048b128c2876994549fc80e" readonly>
+                                    <button class="crypto-copy-btn" data-copy="#addr-eth">copy</button>
+                                </div>
+                                <span class="crypto-note"><a href="https://etherscan.io/address/0x9434edaaddf3b88b1048b128c2876994549fc80e" target="_blank" rel="noopener">view on etherscan</a></span>
+                            </div>
+                            <div class="crypto-item full-width">
+                                <span class="crypto-label">BCH</span>
+                                <div class="crypto-input-group">
+                                    <input type="text" class="crypto-input" id="addr-bch" value="bitcoincash:qr4swgguh90y00xnhrsmpqq78x5rjluhzsq6mj7jls" readonly>
+                                    <button class="crypto-copy-btn" data-copy="#addr-bch">copy</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <span>© <span id="year"></span> sai aarush • minimal, fast, no trackers</span>
+                <div class="footer-links">
+                    <a href="https://github.com/SaiPwn" target="_blank" rel="noopener">GitHub</a>
+                    <a href="https://x.com/SaiPwns" target="_blank" rel="noopener">X</a>
+                    <a href="mailto:sai.aarush@icloud.com">Email</a>
+                </div>
+            </div>
         </div>
-      </div>
-    </section>
+    </footer>
 
-    <section id="projects">
-      <h2>projects</h2>
-      <div class="grid">
-        <article class="card col-6 project">
-          <div class="tag">python</div>
-          <h3 class="mono">HAM-TTS</h3>
-          <p class="muted">tiny tool for phonetics + morse practice. focused on clarity and timing.</p>
-          <div><a href="https://github.com/SaiPwn/HAM-TTS" aria-label="HAM-TTS source">source</a></div>
-        </article>
-        <article class="card col-6 project">
-          <div class="tag">linux / wip</div>
-          <h3 class="mono">UwU-Linux (WIP)</h3>
-          <p class="muted">a playful, minimal linux setup i'm experimenting with. link coming later.</p>
-        </article>
-        <article class="card col-6 project">
-          <div class="tag">notes</div>
-          <h3 class="mono">small scripts & notes</h3>
-          <p class="muted">little utilities and scratchpads i use while learning.</p>
-          <div><a href="https://github.com/SaiPwn" aria-label="scripts and notes">browse</a></div>
-        </article>
-        <article class="card col-6 project">
-          <div class="tag">radio</div>
-          <h3 class="mono">radio practice</h3>
-          <p class="muted">listening, logging, and antenna experiments. just learning by doing.</p>
-        </article>
-      </div>
-    </section>
+    <script>
+        // Year
+        document.getElementById('year').textContent = new Date().getFullYear();
 
-    <section id="radio">
-      <h2>radio log</h2>
-      <div class="card">
-        <ul class="list">
-          <li><span class="bullet"></span><span>building small antennas, learning propagation, and listening a lot. staying within local rules while i learn.</span></li>
-          <li><span class="bullet"></span><span>favourite bands to listen on lately: hf for distance, uhf for local chatter.</span></li>
-          <li><span class="bullet"></span><span>tooling: sdr dongles, tiny handhelds, homebrew antennas, lots of experiments.</span></li>
-        </ul>
-      </div>
-    </section>
-
-    <section id="now">
-      <h2>now</h2>
-      <div class="card">
-        <p class="muted">what i'm up to right now:</p>
-        <ul class="list">
-          <li><span class="bullet"></span><span>studying, building small projects, and writing things down so future-me remembers.</span></li>
-          <li><span class="bullet"></span><span>cleaning up code, testing audio timing for morse/phonetics, and trying new antenna ideas.</span></li>
-        </ul>
-      </div>
-    </section>
-
-    <section id="contact">
-      <h2>contact & support</h2>
-      <div class="card">
-        <p>email: <a id="email" href="mailto:sai.aarush@icloud.com">sai.aarush@icloud.com</a></p>
-        <p class="muted">links i use:</p>
-        <ul class="list">
-          <li><span class="bullet"></span><a id="github" href="https://github.com/SaiPwn" rel="me">github</a></li>
-          <li><span class="bullet"></span><a id="x" href="https://x.com/SaiPwns" rel="me">x / twitter</a></li>
-          <li><span class="bullet"></span><a id="youtube" href="https://www.youtube.com/@SaiPwn" rel="me">youtube</a></li>
-          <li><span class="bullet"></span><a id="instagram" href="https://www.instagram.com/saiaarushsharmaannapantula/" rel="me">instagram</a></li>
-          <li><span class="bullet"></span><a id="facebook" href="https://www.facebook.com/saiaarushsharmaannapantula/" rel="me">facebook</a></li>
-          <li><span class="bullet"></span><a id="kofi" href="https://ko-fi.com/saipwn" rel="me">ko-fi</a></li>
-        </ul>
-      </div>
-
-      <div class="card" style="margin-top:12px">
-        <h3 style="margin:0 0 8px" class="mono">crypto tips</h3>
-        <p class="muted">copy any address below:</p>
-        <div class="grid">
-          <div class="col-6">
-            <label class="muted mono" for="addr-btc">BTC</label>
-            <div class="project">
-              <input id="addr-btc" class="mono" value="1GQ5EHDatGvortbHub3p5phXkvTqfYxBbL" readonly>
-              <button data-copy="#addr-btc" class="copy-btn" type="button">copy</button>
-              <small class="muted mono">bitcoin:1GQ5EHDatGvortbHub3p5phXkvTqfYxBbL</small>
-            </div>
-          </div>
-          <div class="col-6">
-            <label class="muted mono" for="addr-eth">ETH</label>
-            <div class="project">
-              <input id="addr-eth" class="mono" value="0x9434edaaddf3b88b1048b128c2876994549fc80e" readonly>
-              <button data-copy="#addr-eth" class="copy-btn" type="button">copy</button>
-              <small class="muted"><a href="https://etherscan.io/address/0x9434edaaddf3b88b1048b128c2876994549fc80e" target="_blank" rel="noopener">view on etherscan</a></small>
-            </div>
-          </div>
-          <div class="col-12">
-            <label class="muted mono" for="addr-bch">BCH</label>
-            <div class="project">
-              <input id="addr-bch" class="mono" value="bitcoincash:qr4swgguh90y00xnhrsmpqq78x5rjluhzsq6mj7jls" readonly>
-              <button data-copy="#addr-bch" class="copy-btn" type="button">copy</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="wrap">
-      <small>© <span id="y"></span> sai aarush • minimal, fast, no trackers</small>
-    </div>
-  </footer>
-
-  <script>
-    // year + copy buttons
-    document.getElementById('y').textContent = new Date().getFullYear();
-    document.querySelectorAll('[data-copy]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const sel = btn.getAttribute('data-copy');
-        const input = document.querySelector(sel);
-        input.select();
-        input.setSelectionRange(0, 99999);
-        document.execCommand('copy');
-        const original = btn.textContent;
-        btn.textContent = 'copied!';
-        setTimeout(() => btn.textContent = original, 1200);
-      });
-    });
-  </script>
-
-  <script>
-    // theme toggle logic, Chirpy-style persistence
-    (function () {
-      const root = document.documentElement;
-      const toggle = document.getElementById('theme-toggle');
-      const icon = document.getElementById('theme-icon');
-      const label = document.getElementById('theme-label');
-
-      function isDark() {
-        return root.classList.contains('dark');
-      }
-
-      function updateUI() {
-        if (isDark()) {
-          icon.textContent = '☀️';
-          label.textContent = 'light';
-          toggle.setAttribute('aria-label', 'Switch to light mode');
-        } else {
-          icon.textContent = '🌙';
-          label.textContent = 'dark';
-          toggle.setAttribute('aria-label', 'Switch to dark mode');
-        }
-      }
-
-      function setTheme(forceDark) {
-        if (forceDark) {
-          root.classList.add('dark');
-          localStorage.setItem('theme', 'dark');
-        } else {
-          root.classList.remove('dark');
-          localStorage.setItem('theme', 'light');
-        }
-        updateUI();
-      }
-
-      // initial label based on class set in head
-      updateUI();
-
-      toggle.addEventListener('click', () => {
-        setTheme(!isDark());
-      });
-
-      // optional: react to system theme change if user has not chosen manually
-      const media = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
-      if (media && typeof media.addEventListener === 'function') {
-        media.addEventListener('change', e => {
-          const stored = localStorage.getItem('theme');
-          if (!stored) {
-            setTheme(e.matches);
-          }
+        // Copy buttons
+        document.querySelectorAll('[data-copy]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const sel = btn.getAttribute('data-copy');
+                const input = document.querySelector(sel);
+                input.select();
+                input.setSelectionRange(0, 99999);
+                navigator.clipboard.writeText(input.value);
+                const original = btn.textContent;
+                btn.textContent = 'copied!';
+                setTimeout(() => btn.textContent = original, 1200);
+            });
         });
-      }
-    })();
-  </script>
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            el.style.animationPlayState = 'paused';
+            observer.observe(el);
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
