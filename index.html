@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sai Aarush VK3XBR - Ham Radio &amp; Builder</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Tiled background: cat in a tie - small tiles */
+    body {
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #1c1917;
+      background-color: #e8e4dc;
+      background-image: url('bg-cat.png');
+      background-repeat: repeat;
+      background-size: 100px auto;
+      background-attachment: fixed;
+      min-height: 100vh;
+    }
+
+    .page-wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Classic table-based layout feel with div structure */
+    .main-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+
+    .content-cell {
+      background: #fefce8;
+      border: 3px solid #84cc16;
+      padding: 20px;
+      box-shadow: 5px 5px 0 rgba(132, 204, 22, 0.35);
+    }
+
+    /* Header styling */
+    .header {
+      text-align: center;
+      padding: 20px;
+      margin-bottom: 20px;
+      background: linear-gradient(180deg, #65a30d 0%, #4d7c0f 50%, #65a30d 100%);
+      border: 3px solid #4d7c0f;
+      color: #fff;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
+
+    .header h1 {
+      font-size: 22px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      margin-bottom: 5px;
+    }
+
+    .header .callsign {
+      font-size: 18px;
+      opacity: 0.95;
+    }
+
+    /* Navigation links */
+    .nav-links {
+      margin: 15px 0;
+      padding: 10px 0;
+      border-top: 1px dashed #999;
+      border-bottom: 1px dashed #999;
+    }
+
+    .nav-links a {
+      color: #15803d;
+      text-decoration: underline;
+      margin-right: 15px;
+      font-weight: bold;
+    }
+
+    .nav-links a:hover {
+      color: #ca8a04;
+    }
+
+    /* Section styling */
+    h2 {
+      font-size: 14px;
+      color: #15803d;
+      margin: 20px 0 10px;
+      padding-bottom: 5px;
+      border-bottom: 2px dashed #84cc16;
+    }
+
+    h2:first-child {
+      margin-top: 0;
+    }
+
+    h3 {
+      font-size: 12px;
+      color: #15803d;
+      margin: 15px 0 8px;
+    }
+
+    p {
+      margin-bottom: 10px;
+    }
+
+    ul {
+      margin: 0 0 10px 20px;
+    }
+
+    a {
+      color: #15803d;
+    }
+
+    a:hover {
+      color: #ca8a04;
+    }
+
+    /* Logbook iframe container */
+    .logbook-section {
+      margin: 20px 0;
+    }
+
+    .logbook-section iframe {
+      display: block;
+      border: 3px solid #84cc16;
+      background: #fff;
+    }
+
+    /* Alerts badge */
+    .alerts-section {
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .alerts-section img {
+      border: 3px solid #84cc16;
+      max-width: 100%;
+    }
+
+    .alerts-label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      font-size: 12px;
+      color: #15803d;
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 30px;
+      padding-top: 15px;
+      border-top: 2px dashed #84cc16;
+      font-size: 11px;
+      color: #15803d;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <table class="main-table">
+      <tr>
+        <td class="content-cell">
+          <div class="header">
+            <h1>Welcome to Sai Aarush's Homepage!</h1>
+            <div class="callsign">VK3XBR &bull; Point Cook, Victoria, Australia</div>
+          </div>
+
+          <div class="nav-links">
+            <a href="mailto:sai.aarush@icloud.com">Email Me</a>
+            <a href="https://github.com/catmov">GitHub</a>
+            <a href="https://github.com/SaiPwn/HAM-TTS">HAM-TTS</a>
+            <a href="https://www.qrz.com/db/VK3XBR">QRZ Profile</a>
+            <a href="https://sai-aarush.com">Main Site</a>
+          </div>
+
+          <h2>About Me</h2>
+          <p>Hi! I'm Sai Aarush. I'm 14, studying and building small things. I like ham radio, software, and random experiments. Hope your day is bright!</p>
+
+          <h2>Projects</h2>
+          <h3>HAM-TTS</h3>
+          <p>Python tiny tool for phonetics + morse practice. Focused on clarity and timing. <a href="https://github.com/SaiPwn/HAM-TTS">View on GitHub</a></p>
+
+          <h3>UwU-Linux (WIP)</h3>
+          <p>A playful, minimal Linux setup I'm experimenting with. Link coming later.</p>
+
+          <h2>Radio Practice</h2>
+          <p>Listening, logging, and antenna experiments. Learning by doing.</p>
+          <ul>
+            <li>Tools: NanoVNA, handhelds, and DIY dipoles</li>
+            <li>Favourite bands: HF for distance, UHF for local chatter</li>
+            <li>Building small antennas, learning propagation</li>
+          </ul>
+
+          <h2>My Logbook</h2>
+          <div class="logbook-section">
+            <iframe
+              align="top"
+              frameborder="0"
+              height="500"
+              scrolling="yes"
+              src="https://logbook.qrz.com/lbstat/VK3XBR/"
+              width="100%"
+              style="max-width: 640px; min-height: 500px;">
+            </iframe>
+          </div>
+
+          <h2>My Alerts</h2>
+          <div class="alerts-section">
+            <span class="alerts-label">Ham Alert Status</span>
+            <img
+              src="https://hamalert.org/myspot?c=VK3XBR&h=bde2104f0958968b&dark=1"
+              srcset="https://hamalert.org/myspot?c=VK3XBR&h=bde2104f0958968b&dark=1&hr=1 2x"
+              alt="Ham Alert status for VK3XBR"
+              width="640"
+            />
+          </div>
+
+          <h2>Let's Connect</h2>
+          <p>Always happy to chat about code, radio, or anything tech.</p>
+          <p>
+            <a href="mailto:sai.aarush@icloud.com">Send Email</a> &bull;
+            <a href="https://github.com/SaiPwn">GitHub</a> &bull;
+            <a href="https://github.com/SaiPwn/HAM-TTS">HAM-TTS</a> &bull;
+            <a href="https://sai-aarush.com">Main Site</a>
+          </p>
+
+          <div class="footer">
+            Sai Aarush VK3XBR &bull; Last updated Feb 2025 &bull; Best viewed in any browser
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>
+</html>
